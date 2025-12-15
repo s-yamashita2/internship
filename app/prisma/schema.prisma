@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Events {
+  id Int @id @default(autoincrement()) @db.UnsignedInt
+  name String @db.VarChar(200)
+  description String? @db.Text
+  eventStartDatetime DateTime
+  eventEndDatetime DateTime
+  capacity Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+
+  @@index([eventStartDatetime], name: "Events_eventStartDatetime_idx")
+  @@index([eventEndDatetime], name: "Events_eventEndDatetime_idx")
+  @@index([createdAt], name: "Events_createdAt_idx")
+
+  EventRegistrations EventRegistrations[]
+}
+
+model EventRegistrations {
+  id Int @id @default(autoincrement()) @db.UnsignedInt
+  eventId Int @db.UnsignedInt
+  name String @db.VarChar(100)
+  email String @db.VarChar(255)
+  phoneNumber String @db.VarChar(20)
+  birthDate DateTime? @db.Date
+  gender Int @db.TinyInt
+  status Int @db.TinyInt @default(1)
+  notes String? @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+
+  @@index([email], name: "EventRegistrations_email_idx")
+  @@index([eventId], name: "EventRegistrations_eventId_idx")
+  @@index([status], name: "EventRegistrations_status_idx")
+
+  Event Events @relation(fields: [eventId], references: [id])
+}

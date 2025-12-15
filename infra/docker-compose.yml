@@ -1,0 +1,82 @@
+# プロジェクトプレフィックス（複数人で同じEC2にデプロイする際の競合回避用）
+# 各ユーザーは異なるプレフィックスを設定してください（例: user1, user2, dev1）
+# .envファイルでPROJECT_PREFIXとCOMPOSE_PROJECT_NAMEを設定してください
+# COMPOSE_PROJECT_NAMEは、ボリューム名とネットワーク名に自動的にプレフィックスを付けます
+
+services:
+  # Next.js アプリケーション
+  app:
+    build:
+      context: ../app
+      dockerfile: ../infra/app/Dockerfile
+      target: ${BUILD_TARGET:-development}
+    container_name: ${PROJECT_PREFIX:-default}-nextjs-app
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - DATABASE_URL=mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/${MYSQL_DATABASE}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  # Prismaマイグレーション専用コンテナ
+  migration:
+    build:
+      context: ..
+      dockerfile: infra/migration/Dockerfile
+    container_name: ${PROJECT_PREFIX:-default}-nextjs-migration
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - DATABASE_URL=mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/${MYSQL_DATABASE}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    profiles:
+      - migration
+
+  # MySQL データベース
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_PREFIX:-default}-mysql-db
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-p${MYSQL_ROOT_PASSWORD}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - app-network
+
+volumes:
+  mysql-data:
+
+networks:
+  app-network:
+    driver: bridge
