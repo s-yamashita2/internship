@@ -1,4 +1,5 @@
-import type { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 import type { Events } from "@/generated/prisma";
 import { BaseController } from "@/server/controllers/base.controller";
@@ -30,17 +31,14 @@ export class EventController extends BaseController {
   async getEvents(
     request: NextRequest
   ): Promise<NextResponse<SearchEventsResponse>> {
-    // リクエストを処理して結果を返す
-    return this.handleRequest<Event[]>(request, async () => {
-      // イベントを取得
-      const events = await this.eventService.getEvents();
+    // イベントを取得
+    const events = await this.eventService.getEvents();
 
-      // PrismaのEvents型をEvent型に変換
-      const data: Event[] = events.map(this.convertToEvent);
+    // PrismaのEvents型をEvent型に変換
+    const data: Event[] = events.map(this.convertToEvent);
 
-      // 取得結果を返す
-      return { data };
-    });
+    // 取得結果を返す
+    return NextResponse.json<SearchEventsResponse>({ data });
   }
 
   /**
