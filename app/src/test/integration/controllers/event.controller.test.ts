@@ -50,11 +50,15 @@ describe("EventController", () => {
     });
 
     it("イベントを取得できること", async () => {
+      // NextRequestクラスを実体化する処理
       const request = new NextRequest("http://localhost:3000/api/events", {
         method: "GET",
       });
 
+      // API (GET /api/events) を実行する処理
       const response = await GET(request);
+
+      // APIの戻り値をJSON形式に変換する処理
       const body = await response.json();
 
       expect(response.status).toBe(200);

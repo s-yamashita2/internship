@@ -4,6 +4,8 @@ import { EventController } from "@/server/controllers/event.controller";
 import { EventRepository } from "@/server/repositories/event.repository";
 import { EventService } from "@/server/services/event.service";
 
+import { ParrotController } from "./controllers/parrot.controller";
+
 /**
  * 依存関係を登録
  */
@@ -29,6 +31,9 @@ export function registerDependencies(): void {
   container.register(EventController, () => {
     const eventService = container.resolve(EventService);
     return new EventController(eventService);
+  });
+  container.register(ParrotController, () => {
+    return new ParrotController();
   });
 }
 
