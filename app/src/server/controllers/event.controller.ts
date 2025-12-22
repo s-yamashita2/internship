@@ -58,6 +58,7 @@ export class EventController extends BaseController {
         eventStartDatetime,
         eventEndDatetime,
         capacity,
+        prefecture,
       } = await validateRequestBody<CreateEventRequest>(
         request,
         CreateEventParamsSchema
@@ -70,6 +71,7 @@ export class EventController extends BaseController {
         eventStartDatetime: parseIso(eventStartDatetime),
         eventEndDatetime: parseIso(eventEndDatetime),
         capacity,
+        prefecture,
       });
 
       // PrismaのEvents型をEvent型に変換
@@ -88,6 +90,7 @@ export class EventController extends BaseController {
       eventStartDatetime: toIso(event.eventStartDatetime),
       eventEndDatetime: toIso(event.eventEndDatetime),
       capacity: event.capacity,
+      prefecture: event.prefecture,
       createdAt: toIso(event.createdAt),
       updatedAt: toIso(event.updatedAt),
     };

@@ -1,4 +1,5 @@
 import { PrismaClient } from "@/generated/prisma";
+import { Prefecture } from "@/shared/common/enums/prefecture.enum";
 import { addDays, addHours, createDate, getParts, now, TZ } from "@/utils/date";
 
 const prisma = new PrismaClient();
@@ -9,6 +10,7 @@ type EventTemplate = {
   startHour: number;
   duration: number;
   capacity: number;
+  prefecture: Prefecture;
 };
 
 type Event = {
@@ -17,6 +19,7 @@ type Event = {
   eventStartDatetime: Date;
   eventEndDatetime: Date;
   capacity: number;
+  prefecture: Prefecture;
 };
 
 const eventTemplates = [
@@ -27,6 +30,7 @@ const eventTemplates = [
     startHour: 10,
     duration: 2,
     capacity: 30,
+    prefecture: Prefecture.HOKKAIDO,
   },
   {
     name: "TypeScript実践セミナー",
@@ -34,6 +38,7 @@ const eventTemplates = [
     startHour: 14,
     duration: 2,
     capacity: 25,
+    prefecture: Prefecture.AOMORI,
   },
   {
     name: "Next.jsアプリケーション開発",
@@ -42,6 +47,7 @@ const eventTemplates = [
     startHour: 10,
     duration: 3,
     capacity: 40,
+    prefecture: Prefecture.IWATE,
   },
   {
     name: "Docker/Kubernetes基礎講座",
@@ -50,6 +56,7 @@ const eventTemplates = [
     startHour: 13,
     duration: 2,
     capacity: 35,
+    prefecture: Prefecture.MIYAGI,
   },
   {
     name: "AWSクラウド入門",
@@ -58,6 +65,7 @@ const eventTemplates = [
     startHour: 10,
     duration: 2,
     capacity: 50,
+    prefecture: Prefecture.AKITA,
   },
   {
     name: "Python機械学習ハンズオン",
@@ -66,6 +74,7 @@ const eventTemplates = [
     startHour: 14,
     duration: 3,
     capacity: 20,
+    prefecture: Prefecture.YAMAGATA,
   },
   {
     name: "GraphQL API設計",
@@ -73,6 +82,7 @@ const eventTemplates = [
     startHour: 11,
     duration: 2,
     capacity: 30,
+    prefecture: Prefecture.FUKUSHIMA,
   },
   {
     name: "マイクロサービスアーキテクチャ",
@@ -81,6 +91,7 @@ const eventTemplates = [
     startHour: 15,
     duration: 2,
     capacity: 25,
+    prefecture: Prefecture.IBARAKI,
   },
   {
     name: "CI/CDパイプライン構築",
@@ -89,6 +100,7 @@ const eventTemplates = [
     startHour: 10,
     duration: 2,
     capacity: 30,
+    prefecture: Prefecture.TOCHIGI,
   },
   {
     name: "セキュリティベストプラクティス",
@@ -97,6 +109,7 @@ const eventTemplates = [
     startHour: 13,
     duration: 2,
     capacity: 40,
+    prefecture: Prefecture.GUNMA,
   },
   {
     name: "データベース設計基礎",
@@ -105,6 +118,7 @@ const eventTemplates = [
     startHour: 10,
     duration: 1,
     capacity: 35,
+    prefecture: Prefecture.SAITAMA,
   },
   {
     name: "フロントエンドパフォーマンス最適化",
@@ -113,6 +127,7 @@ const eventTemplates = [
     startHour: 14,
     duration: 2,
     capacity: 30,
+    prefecture: Prefecture.CHIBA,
   },
   {
     name: "バックエンドAPI開発",
@@ -121,6 +136,7 @@ const eventTemplates = [
     startHour: 11,
     duration: 2,
     capacity: 25,
+    prefecture: Prefecture.TOKYO,
   },
   {
     name: "モバイルアプリ開発（React Native）",
@@ -129,6 +145,7 @@ const eventTemplates = [
     startHour: 10,
     duration: 3,
     capacity: 20,
+    prefecture: Prefecture.KANAGAWA,
   },
   {
     name: "テスト駆動開発（TDD）",
@@ -137,6 +154,7 @@ const eventTemplates = [
     startHour: 15,
     duration: 2,
     capacity: 30,
+    prefecture: Prefecture.NIIGATA,
   },
   {
     name: "Git/GitHub実践",
@@ -145,6 +163,7 @@ const eventTemplates = [
     startHour: 10,
     duration: 1,
     capacity: 40,
+    prefecture: Prefecture.TOYAMA,
   },
   {
     name: "デザインパターン入門",
@@ -153,6 +172,7 @@ const eventTemplates = [
     startHour: 13,
     duration: 2,
     capacity: 25,
+    prefecture: Prefecture.ISHIKAWA,
   },
   {
     name: "リアルタイムアプリケーション開発",
@@ -161,6 +181,7 @@ const eventTemplates = [
     startHour: 14,
     duration: 2,
     capacity: 30,
+    prefecture: Prefecture.FUKUI,
   },
   {
     name: "サーバーレスアーキテクチャ",
@@ -169,6 +190,7 @@ const eventTemplates = [
     startHour: 11,
     duration: 2,
     capacity: 35,
+    prefecture: Prefecture.YAMANASHI,
   },
   {
     name: "コンテナオーケストレーション",
@@ -177,6 +199,7 @@ const eventTemplates = [
     startHour: 10,
     duration: 3,
     capacity: 20,
+    prefecture: Prefecture.NAGANO,
   },
   {
     name: "モノレポ開発手法",
@@ -185,6 +208,7 @@ const eventTemplates = [
     startHour: 15,
     duration: 2,
     capacity: 30,
+    prefecture: Prefecture.GIFU,
   },
   {
     name: "アクセシビリティ対応",
@@ -192,6 +216,7 @@ const eventTemplates = [
     startHour: 10,
     duration: 1,
     capacity: 40,
+    prefecture: Prefecture.SHIZUOKA,
   },
   {
     name: "パフォーマンスモニタリング",
@@ -200,6 +225,7 @@ const eventTemplates = [
     startHour: 13,
     duration: 2,
     capacity: 25,
+    prefecture: Prefecture.AICHI,
   },
   {
     name: "データ可視化技術",
@@ -208,6 +234,7 @@ const eventTemplates = [
     startHour: 14,
     duration: 2,
     capacity: 30,
+    prefecture: Prefecture.MIE,
   },
   {
     name: "ブロックチェーン入門",
@@ -216,6 +243,7 @@ const eventTemplates = [
     startHour: 10,
     duration: 2,
     capacity: 35,
+    prefecture: Prefecture.SHIGA,
   },
   {
     name: "DevOps実践",
@@ -224,6 +252,7 @@ const eventTemplates = [
     startHour: 16,
     duration: 2,
     capacity: 30,
+    prefecture: Prefecture.KYOTO,
   },
   {
     name: "API設計のベストプラクティス",
@@ -232,6 +261,7 @@ const eventTemplates = [
     startHour: 11,
     duration: 1,
     capacity: 40,
+    prefecture: Prefecture.OSAKA,
   },
   {
     name: "フルスタック開発入門",
@@ -240,6 +270,7 @@ const eventTemplates = [
     startHour: 10,
     duration: 3,
     capacity: 25,
+    prefecture: Prefecture.HYOGO,
   },
   {
     name: "クラウドネイティブ開発",
@@ -248,6 +279,7 @@ const eventTemplates = [
     startHour: 14,
     duration: 2,
     capacity: 30,
+    prefecture: Prefecture.NARA,
   },
   {
     name: "AI/MLアプリケーション統合",
@@ -256,6 +288,7 @@ const eventTemplates = [
     startHour: 15,
     duration: 2,
     capacity: 20,
+    prefecture: Prefecture.WAKAYAMA,
   },
 ] as const satisfies EventTemplate[];
 
@@ -286,6 +319,7 @@ const events: Event[] = eventTemplates.map((template, index) => {
     eventStartDatetime: startDate,
     eventEndDatetime: endDate,
     capacity: template.capacity,
+    prefecture: template.prefecture,
   };
 });
 
@@ -297,6 +331,7 @@ export const createEvents = async () => {
       eventStartDatetime: event.eventStartDatetime,
       eventEndDatetime: event.eventEndDatetime,
       capacity: event.capacity,
+      prefecture: event.prefecture,
     })),
   });
 };

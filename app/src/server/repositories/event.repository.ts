@@ -1,4 +1,5 @@
 import type { Events, Prisma, PrismaClient } from "@/generated/prisma";
+import { Prefecture } from "@/shared/common/enums/prefecture.enum";
 
 import { BaseRepository } from "./base.repository";
 
@@ -8,6 +9,7 @@ export type CreateParams = {
   eventStartDatetime: Date;
   eventEndDatetime: Date;
   capacity: number;
+  prefecture: Prefecture;
 };
 
 export class EventRepository extends BaseRepository {
@@ -32,6 +34,7 @@ export class EventRepository extends BaseRepository {
         eventStartDatetime: params.eventStartDatetime,
         eventEndDatetime: params.eventEndDatetime,
         capacity: params.capacity,
+        prefecture: params.prefecture,
       },
     });
   }

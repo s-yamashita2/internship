@@ -1,5 +1,7 @@
 import z from "zod";
 
+import { Prefecture } from "@/shared/common/enums/prefecture.enum";
+
 import { CommonSchema } from "./common.schema";
 
 export const CreateEventParamsSchema = z
@@ -9,6 +11,11 @@ export const CreateEventParamsSchema = z
     eventStartDatetime: CommonSchema.isoDatetimeString,
     eventEndDatetime: CommonSchema.isoDatetimeString,
     capacity: z.number().min(1),
+    prefecture: z
+      .enum(Prefecture, { error: "prefecture must be a valid enum value" })
+      .refine((val) => val !== undefined, {
+        error: "prefecture is required",
+      }),
   })
   .superRefine(({ eventStartDatetime, eventEndDatetime }, ctx) => {
     if (
