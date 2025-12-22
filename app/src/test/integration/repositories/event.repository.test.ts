@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { container } from "@/server/container";
 import { EventRepository } from "@/server/repositories/event.repository";
+import { Prefecture } from "@/shared/common/enums/prefecture.enum";
 import { DataCleaner } from "@/test/helpers/data-cleaner";
 
 describe("EventRepository", () => {
@@ -20,6 +21,7 @@ describe("EventRepository", () => {
         eventStartDatetime: new Date("2025-01-01T10:00:00.000Z"),
         eventEndDatetime: new Date("2025-01-01T12:00:00.000Z"),
         capacity: 100,
+        prefecture: Prefecture.HOKKAIDO,
       });
 
       expect(event).toBeDefined();
@@ -32,6 +34,7 @@ describe("EventRepository", () => {
         new Date("2025-01-01T12:00:00.000Z")
       );
       expect(event.capacity).toBe(100);
+      expect(event.prefecture).toBe(Prefecture.HOKKAIDO);
     });
 
     it("説明がnullのイベントを作成できること", async () => {
@@ -41,12 +44,14 @@ describe("EventRepository", () => {
         eventStartDatetime: new Date("2025-01-01T10:00:00.000Z"),
         eventEndDatetime: new Date("2025-01-01T12:00:00.000Z"),
         capacity: 50,
+        prefecture: Prefecture.HOKKAIDO,
       });
 
       expect(event).toBeDefined();
       expect(event.name).toBe("Test Event");
       expect(event.description).toBeNull();
       expect(event.capacity).toBe(50);
+      expect(event.prefecture).toBe(Prefecture.HOKKAIDO);
     });
   });
 
@@ -59,6 +64,7 @@ describe("EventRepository", () => {
           eventStartDatetime: new Date("2025-01-01T10:00:00.000Z"),
           eventEndDatetime: new Date("2025-01-01T12:00:00.000Z"),
           capacity: 100,
+          prefecture: Prefecture.HOKKAIDO,
           createdAt: new Date("2025-01-01T00:00:00.000Z"),
           updatedAt: new Date("2025-01-01T00:00:00.000Z"),
         },
@@ -70,6 +76,7 @@ describe("EventRepository", () => {
           eventStartDatetime: new Date("2025-01-02T10:00:00.000Z"),
           eventEndDatetime: new Date("2025-01-02T12:00:00.000Z"),
           capacity: 200,
+          prefecture: Prefecture.AOMORI,
           createdAt: new Date("2025-01-02T00:00:00.000Z"),
           updatedAt: new Date("2025-01-02T00:00:00.000Z"),
         },
@@ -81,6 +88,7 @@ describe("EventRepository", () => {
           eventStartDatetime: new Date("2025-01-03T10:00:00.000Z"),
           eventEndDatetime: new Date("2025-01-03T12:00:00.000Z"),
           capacity: 300,
+          prefecture: Prefecture.IWATE,
           createdAt: new Date("2025-01-03T00:00:00.000Z"),
           updatedAt: new Date("2025-01-03T00:00:00.000Z"),
         },

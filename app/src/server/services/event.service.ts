@@ -1,5 +1,6 @@
 import type { Events } from "@/generated/prisma";
 import { TransactionManager } from "@/lib/prisma";
+import { Prefecture } from "@/shared/common/enums/prefecture.enum";
 
 import { EventRepository } from "../repositories/event.repository";
 
@@ -15,6 +16,7 @@ export type CreateEventParams = {
   eventStartDatetime: Date;
   eventEndDatetime: Date;
   capacity: number;
+  prefecture: Prefecture;
 };
 
 export class EventService {
@@ -54,6 +56,7 @@ export class EventService {
       eventStartDatetime,
       eventEndDatetime,
       capacity,
+      prefecture,
     } = params;
 
     // トランザクションを開始
@@ -66,6 +69,7 @@ export class EventService {
           eventStartDatetime,
           eventEndDatetime,
           capacity,
+          prefecture,
         },
         tx
       );

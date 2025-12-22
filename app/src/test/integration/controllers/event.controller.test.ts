@@ -3,6 +3,7 @@ import { NextRequest } from "next/server";
 
 import { GET, POST } from "@/app/api/events/route";
 import { prisma } from "@/lib/prisma";
+import { Prefecture } from "@/shared/common/enums/prefecture.enum";
 import { DataCleaner } from "@/test/helpers/data-cleaner";
 
 describe("EventController", () => {
@@ -17,6 +18,7 @@ describe("EventController", () => {
           eventStartDatetime: new Date("2025-01-01T10:00:00.000Z"),
           eventEndDatetime: new Date("2025-01-01T12:00:00.000Z"),
           capacity: 100,
+          prefecture: Prefecture.HOKKAIDO,
           createdAt: new Date("2025-01-01T00:00:00.000Z"),
           updatedAt: new Date("2025-01-01T00:00:00.000Z"),
         },
@@ -28,6 +30,7 @@ describe("EventController", () => {
           eventStartDatetime: new Date("2025-01-02T10:00:00.000Z"),
           eventEndDatetime: new Date("2025-01-02T12:00:00.000Z"),
           capacity: 200,
+          prefecture: Prefecture.AOMORI,
           createdAt: new Date("2025-01-02T00:00:00.000Z"),
           updatedAt: new Date("2025-01-02T00:00:00.000Z"),
         },
@@ -39,6 +42,7 @@ describe("EventController", () => {
           eventStartDatetime: new Date("2025-01-03T10:00:00.000Z"),
           eventEndDatetime: new Date("2025-01-03T12:00:00.000Z"),
           capacity: 300,
+          prefecture: Prefecture.IWATE,
           createdAt: new Date("2025-01-03T00:00:00.000Z"),
           updatedAt: new Date("2025-01-03T00:00:00.000Z"),
         },
@@ -72,6 +76,7 @@ describe("EventController", () => {
             eventStartDatetime: "2025-01-01T10:00:00.000Z",
             eventEndDatetime: "2025-01-01T12:00:00.000Z",
             capacity: 100,
+            prefecture: Prefecture.HOKKAIDO,
             createdAt: expect.stringMatching(
               /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
             ),
@@ -86,6 +91,7 @@ describe("EventController", () => {
             eventStartDatetime: "2025-01-02T10:00:00.000Z",
             eventEndDatetime: "2025-01-02T12:00:00.000Z",
             capacity: 200,
+            prefecture: Prefecture.AOMORI,
             createdAt: expect.stringMatching(
               /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
             ),
@@ -100,6 +106,7 @@ describe("EventController", () => {
             eventStartDatetime: "2025-01-03T10:00:00.000Z",
             eventEndDatetime: "2025-01-03T12:00:00.000Z",
             capacity: 300,
+            prefecture: Prefecture.IWATE,
             createdAt: expect.stringMatching(
               /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
             ),
@@ -129,6 +136,7 @@ describe("EventController", () => {
           eventStartDatetime: "2025-01-01T10:00:00.000Z",
           eventEndDatetime: "2025-01-01T12:00:00.000Z",
           capacity: 100,
+          prefecture: Prefecture.HOKKAIDO,
         }),
       });
 
@@ -142,6 +150,7 @@ describe("EventController", () => {
         eventStartDatetime: "2025-01-01T10:00:00.000Z",
         eventEndDatetime: "2025-01-01T12:00:00.000Z",
         capacity: 100,
+        prefecture: Prefecture.HOKKAIDO,
       });
       expect(body.data.id).toBeDefined();
       expect(body.data.createdAt).toBeDefined();
@@ -159,6 +168,7 @@ describe("EventController", () => {
           eventStartDatetime: "2025-01-01T10:00:00.000Z",
           eventEndDatetime: "2025-01-01T12:00:00.000Z",
           capacity: 100,
+          prefecture: Prefecture.HOKKAIDO,
         }),
       });
 
@@ -172,6 +182,7 @@ describe("EventController", () => {
         eventStartDatetime: "2025-01-01T10:00:00.000Z",
         eventEndDatetime: "2025-01-01T12:00:00.000Z",
         capacity: 100,
+        prefecture: Prefecture.HOKKAIDO,
       });
       expect(body.data.id).toBeDefined();
       expect(body.data.createdAt).toBeDefined();
@@ -189,6 +200,7 @@ describe("EventController", () => {
           eventStartDatetime: "2025-01-01T10:00:00.000Z",
           eventEndDatetime: "2025-01-01T12:00:00.000Z",
           capacity: 100,
+          prefecture: Prefecture.HOKKAIDO,
         }),
       });
 

@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { container } from "@/server/container";
 import { EventService } from "@/server/services/event.service";
+import { Prefecture } from "@/shared/common/enums/prefecture.enum";
 import { DataCleaner } from "@/test/helpers/data-cleaner";
 
 describe("EventService", () => {
@@ -17,6 +18,7 @@ describe("EventService", () => {
           eventStartDatetime: new Date("2025-01-01T10:00:00.000Z"),
           eventEndDatetime: new Date("2025-01-01T12:00:00.000Z"),
           capacity: 100,
+          prefecture: Prefecture.HOKKAIDO,
           createdAt: new Date("2025-01-01T00:00:00.000Z"),
           updatedAt: new Date("2025-01-01T00:00:00.000Z"),
         },
@@ -28,6 +30,7 @@ describe("EventService", () => {
           eventStartDatetime: new Date("2025-01-02T10:00:00.000Z"),
           eventEndDatetime: new Date("2025-01-02T12:00:00.000Z"),
           capacity: 200,
+          prefecture: Prefecture.AOMORI,
           createdAt: new Date("2025-01-02T00:00:00.000Z"),
           updatedAt: new Date("2025-01-02T00:00:00.000Z"),
         },
@@ -39,6 +42,7 @@ describe("EventService", () => {
           eventStartDatetime: new Date("2025-01-03T10:00:00.000Z"),
           eventEndDatetime: new Date("2025-01-03T12:00:00.000Z"),
           capacity: 300,
+          prefecture: Prefecture.IWATE,
           createdAt: new Date("2025-01-03T00:00:00.000Z"),
           updatedAt: new Date("2025-01-03T00:00:00.000Z"),
         },
@@ -63,6 +67,7 @@ describe("EventService", () => {
         new Date("2025-01-01T12:00:00.000Z")
       );
       expect(events[0].capacity).toBe(100);
+      expect(events[0].prefecture).toBe(Prefecture.HOKKAIDO);
       expect(events[0].createdAt).toBeDefined();
       expect(events[0].updatedAt).toBeDefined();
       expect(events[1].id).toBeDefined();
@@ -75,6 +80,7 @@ describe("EventService", () => {
         new Date("2025-01-02T12:00:00.000Z")
       );
       expect(events[1].capacity).toBe(200);
+      expect(events[1].prefecture).toBe(Prefecture.AOMORI);
       expect(events[1].createdAt).toBeDefined();
       expect(events[1].updatedAt).toBeDefined();
       expect(events[2].id).toBeDefined();
@@ -87,6 +93,7 @@ describe("EventService", () => {
         new Date("2025-01-03T12:00:00.000Z")
       );
       expect(events[2].capacity).toBe(300);
+      expect(events[2].prefecture).toBe(Prefecture.IWATE);
       expect(events[2].createdAt).toBeDefined();
       expect(events[2].updatedAt).toBeDefined();
     });
@@ -104,6 +111,7 @@ describe("EventService", () => {
         eventStartDatetime: new Date("2025-01-01T10:00:00.000Z"),
         eventEndDatetime: new Date("2025-01-01T12:00:00.000Z"),
         capacity: 100,
+        prefecture: Prefecture.HOKKAIDO,
       });
       expect(event).toBeDefined();
       expect(event.id).toBeDefined();
@@ -116,6 +124,7 @@ describe("EventService", () => {
         new Date("2025-01-01T12:00:00.000Z")
       );
       expect(event.capacity).toBe(100);
+      expect(event.prefecture).toBe(Prefecture.HOKKAIDO);
       expect(event.createdAt).toBeDefined();
       expect(event.updatedAt).toBeDefined();
     });
@@ -127,6 +136,7 @@ describe("EventService", () => {
         eventStartDatetime: new Date("2025-01-01T10:00:00.000Z"),
         eventEndDatetime: new Date("2025-01-01T12:00:00.000Z"),
         capacity: 50,
+        prefecture: Prefecture.HOKKAIDO,
       });
       expect(event).toBeDefined();
       expect(event.id).toBeDefined();
@@ -139,6 +149,7 @@ describe("EventService", () => {
         new Date("2025-01-01T12:00:00.000Z")
       );
       expect(event.capacity).toBe(50);
+      expect(event.prefecture).toBe(Prefecture.HOKKAIDO);
       expect(event.createdAt).toBeDefined();
       expect(event.updatedAt).toBeDefined();
     });

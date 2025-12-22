@@ -1,3 +1,5 @@
+import { Prefecture } from "@/shared/common/enums/prefecture.enum";
+
 import { ResponseData } from "./response.type";
 
 export type Event = {
@@ -7,6 +9,7 @@ export type Event = {
   eventStartDatetime: string;
   eventEndDatetime: string;
   capacity: number;
+  prefecture: Prefecture;
   createdAt: string;
   updatedAt: string;
 };

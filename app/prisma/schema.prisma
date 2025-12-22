@@ -21,6 +21,7 @@ model Events {
   eventStartDatetime DateTime
   eventEndDatetime DateTime
   capacity Int
+  prefecture Int @db.TinyInt
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
 
