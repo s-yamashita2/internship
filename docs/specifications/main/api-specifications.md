@@ -95,7 +95,27 @@
 
 **クエリパラメータ**
 
-なし
+| パラメータ名   | 型      | 必須 | 説明       |
+| -------------- | ------- | ---- | ---------- |
+| `keyword`      | string  | -    | ジャンル   |
+| `from`         | date    | -    | 開催日時   |
+| `to`           | date    | -    | 終了日時   |
+| `prefecture`   | int     | -    | 開催場所   |
+| `new`          | boolean | -    | 登録時間   |
+| `createdHours` | int     | -    | 開催日時   |
+| `order`        | asc     | -    | 昇順、降順 |
+
+**バリデーション**
+
+| フィールド名 | エラー条件                                         | エラーメッセージ                           |
+| ------------ | -------------------------------------------------- | ------------------------------------------ |
+| `keyword`    | 40 文字を超える場合                                | `"please enter within 40 characters"`      |
+| `from`       | 日付文字列以外の文字列の場合                       | `"please enter a valid ISO 8601 datetime"` |
+| `to`         | 日付文字列以外の文字列の場合                       | `"please enter a valid ISO 8601 datetime"` |
+| `to`         | from より未来日付ではない場合                      | `"please enter a date after  from"`        |
+| `prefecture` | 1~47 以外の数値を入れた場合 数値以外の文字列の場合 | `"please enter a number between 1 and 47"` |
+| `new`        | true または false 以外の文字列の場合               | `"please enter true or false"`             |
+| `order`      | asc または desc 以外の文字列の場合                 | `"please enter asc or desc"`               |
 
 **リクエスト例**
 
