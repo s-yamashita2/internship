@@ -46,9 +46,29 @@ export class EventRepository extends BaseRepository {
    * @returns 検索結果
    */
   async findMany(
+    prefecture: number | undefined,
+    keyword: string | undefined,
+    from: Date | undefined,
+    to: Date | undefined,
+    newarrival: boolean | undefined,
+    order: string | undefined,
     tx: Prisma.TransactionClient = this.prisma
   ): Promise<Events[]> {
-    const events = await tx.events.findMany({});
+    const events = await tx.events.findMany({
+      where: {
+        prefecture: prefecture,
+        OR: [
+          { name: { contains: keyword ?? "" } },
+          { description: { contains: keyword ?? "" } },
+        ],
+        eventStartDatetime: {
+          gt: from,
+        },
+        eventEndDatetime: {
+          lt: to,
+        },
+      },
+    });
 
     return events;
   }
