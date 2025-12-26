@@ -35,9 +35,23 @@ export class EventService {
    * イベントを取得
    * @returns 取得結果
    */
-  async getEvents(): Promise<Events[]> {
+  async getEvents(
+    prefecture: number | undefined,
+    keyword: string | undefined,
+    from: Date | undefined,
+    to: Date | undefined,
+    newarrival: boolean | undefined,
+    order: string | undefined
+  ): Promise<Events[]> {
     // イベントを取得
-    const events = await this.eventRepository.findMany();
+    const events = await this.eventRepository.findMany(
+      prefecture,
+      keyword,
+      from,
+      to,
+      newarrival,
+      order
+    );
 
     // 取得結果を返す
     return events;
